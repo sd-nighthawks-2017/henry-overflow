@@ -18,6 +18,7 @@ end
 
 # show
 get '/questions/:id' do
+  @answers = Answer.all
   @question = Question.find(params[:id])
   erb :"questions/show"
 end
