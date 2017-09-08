@@ -1,0 +1,19 @@
+<style>
+  form { display: inline; }
+
+  form input {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    font: inherit;
+    color: -webkit-link;
+    text-decoration: underline;
+    cursor: auto;
+  }
+</style>
+
+<h3><%= @question.title %></h3>
+<p><%= @question.body %></p>
+<a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+<%= erb :'questions/_delete', layout: false, locals: { question: @question } %><br>
+<a href='/'>Return Home</a>
