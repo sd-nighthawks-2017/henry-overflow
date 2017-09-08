@@ -2,12 +2,13 @@
 
 <a href = '/login'>login</a>  <a href = '/register'>register</a>
 
-
-<ul>
-  <% @questions.each do |question| %>
-  <li> <a href = "/questions/<%=question.id%>"> <%= question.body %> </a></li>
-  <% end %>
-</ul>
+<div class="home">
+  <ul>
+    <% @questions.each do |question| %>
+    <li> <a class="home-questions" href = "/questions"> <%= question %> </a></li>
+    <% end %>
+  </ul>
+</div>
 
 <p> Save 15% or more on car insurance by switching to Geico </p>
 
