@@ -26,7 +26,7 @@ get '/questions/:id' do
   else
     erb :"questions/show"
   end
-  
+
 end
 
 # edit

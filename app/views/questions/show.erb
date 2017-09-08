@@ -12,12 +12,12 @@
   }
 </style>
 
-<%= erb :'/questions/_questions.erb', layout: false, locals: { question: @question } %>
+<%= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
 
 <a href='/'>Return Home</a>
 
 <ul>
-  <% @answers.each do |answer| %>
+  <% @question.answers.each do |answer| %>
   <li> <%= answer.body %> <a href ='/answer/<%=answer.id%>/edit'>edit </a> <a href = "/answer/<%=answer.id%>/delete"> delete </a></li>
   <% end %>
 </ul>
