@@ -12,18 +12,21 @@ end
 
 # create
 post '/questions' do
-  @question = Question.create(params[:question])
+  @question = Question.create(title: params[:title], body: params[:question])
   redirect '/'
 end
 
 # show
 get '/questions/:id' do
+
   @question = Question.find(params[:id])
+
   if request.xhr?
     erb :"/questions/_questions", layout: false
   else
     erb :"questions/show"
   end
+  
 end
 
 # edit
