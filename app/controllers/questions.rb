@@ -12,14 +12,15 @@ end
 
 # create
 post '/questions' do
-  @question = Question.create(params[:question])
+  @question = Question.create(title: params[:title], body: params[:question])
   redirect '/'
 end
 
 # show
 get '/questions/:id' do
-  @answers = Answer.all
+
   @question = Question.find(params[:id])
+  @answers = @question.answers
   erb :"questions/show"
 end
 
