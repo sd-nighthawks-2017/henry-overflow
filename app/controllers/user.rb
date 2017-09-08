@@ -28,6 +28,14 @@ post '/register' do
 end
 
 get '/profile' do
-
+ if session[:user_id] != nil
  erb :profile
+ else
+  erb :login
+ end
+end
+
+get '/logout' do
+ session.clear
+ redirect '/login'
 end
