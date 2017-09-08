@@ -1,0 +1,6 @@
+<div class="question-details">
+  <h3><%= @question.title %></h3>
+    <p><%= @question.body %></p>
+    <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+      <%= erb :'questions/_delete', layout: false, locals: { question: @question } %><br>
+</div>
