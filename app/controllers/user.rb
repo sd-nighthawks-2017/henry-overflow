@@ -34,7 +34,7 @@ end
 
 get '/profile' do
  if session[:user_id] != nil
- erb :profile
+  erb :profile
  else
   erb :login
  end
