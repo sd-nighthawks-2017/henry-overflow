@@ -5,7 +5,7 @@
 <div class="home">
   <ul>
     <% @questions.each do |question| %>
-    <li> <a class="home-questions" href = "/questions/<%=question.id%>"> <%= question.body %> </a></li>
+    <li> <a class="home-questions" href = "/questions/<%=question.id%>"> <%= question.title %> </a></li>
     <% end %>
   </ul>
 </div>
