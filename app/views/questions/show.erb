@@ -1,11 +1,12 @@
-
 <% @question.votes.each do |vote| %>
 <h3><%= vote.value %> <%= @question.title %></h3>
 <% end %>
 
 <h3><%= @question.title %></h3>
-
 <p><%= @question.body %></p>
+<a href="/questions/<%= @question.id %>/upvote">up vote</a>
+<a href="/questions/<%= @question.id %>/downvote">down vote</a>
+
 
 <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
 <%= erb :'questions/_delete', layout: false, locals: { question: @question } %>
@@ -16,14 +17,13 @@
   <% end %>
 </ul>
 
-<a href="/questions/<%= @question.id %>/upvote">up vote</a>
-<a href="/questions/<%= @question.id %>/downvote">down vote</a>
-
 <ul>
   <% @question.comments.each do |comment| %>
-    <li><%=%> <%= comment.body %></li>
-    <a href ='/question/<%=comment.id%>/upvote'>upvote </a>
-    <a href ='/question/<%=comment.id%>/downvote'>downvote </a>
+  <% comment.votes.each do |vote| %>
+    <li><%=vote.value %> <%= comment.body %></li>
+    <% end %>
+    <a href ='/comments/<%=comment.id%>/upvote'>upvote </a>
+    <a href ='/comments/<%=comment.id%>/downvote'>downvote </a>
   <% end %>
 </ul>
 
@@ -35,7 +35,7 @@
  <input type="submit" value="Comment">
 </form>
 
-<%= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
+<%#= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
 
 <ul>
   <% @question.answers.each do |answer| %>
@@ -55,14 +55,15 @@
      <% end %>
 <ul>
   <% @question.answers.each do |answer| %>
+  <% answer.votes.each do |vote| %>
     <li>
-      <%= answer.votes[0].value %> <%= answer.body %>
+      <%= vote.value %> <%= answer.body %>
       <a href ='/answer/<%=answer.id%>/edit'>edit </a>
       <a href = "/answer/<%=answer.id%>/delete"> delete </a>
       <a href ="/answer/<%=answer.id%>/upvote">up vote</a>
       <a href = "/answer/<%=answer.id%>/downvote">down vote</a>
     </li>
-
+    <% end %>
   <% end %>
 </ul>
 
