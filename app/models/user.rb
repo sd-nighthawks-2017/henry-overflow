@@ -1,6 +1,10 @@
 require 'bcrypt'
 
-class User < ApplicationRecord
+class User < ActiveRecord::Base
+has_many :questions
+has_many :answers
+has_many :comments
+
 include BCrypt
  def password
    @password ||= Password.new(hashed_password)
