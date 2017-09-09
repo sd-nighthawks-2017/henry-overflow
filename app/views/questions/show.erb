@@ -1,4 +1,4 @@
-<h3><%= @question.votes[0].value%> <%= @question.title %></h3>
+<h3><%= @question.votes[0].value %> <%= @question.title %></h3>
 
 <p><%= @question.body %></p>
 <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
@@ -22,7 +22,7 @@
   <input type="submit" value="Comment">
 </form>
 
-<%#= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
+<%= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
 
 <a href='/'>Return Home</a>
 <ul>
