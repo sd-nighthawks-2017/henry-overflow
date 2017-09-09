@@ -73,3 +73,11 @@ delete '/questions/:id' do
     redirect '/login'
  end
 end
+
+# create comment
+post '/questions/:id/comments' do
+  @comment = Comment.create(body: params[:body], user_id: session[:user_id])
+  @question = Question.find(params[:id])
+  @question.comments << @comment
+  redirect "/questions/#{@question.id}"
+end
