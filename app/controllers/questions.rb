@@ -47,6 +47,8 @@ get '/questions/:id/edit' do
   end
 end
 
+
+
 # update
 def update_question
   if session[:user_id]

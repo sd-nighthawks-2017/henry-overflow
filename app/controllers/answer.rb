@@ -17,7 +17,7 @@ get '/answer/:id/edit' do
 end
 
 post '/questions/:id/answer' do
-  if session [:user_id]
+  if session[:user_id]
     @answer = Answer.create(body: params[:answer], question_id: params[:id])
     redirect "/questions/#{params[:id]}"
   else

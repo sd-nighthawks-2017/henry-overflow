@@ -34,6 +34,7 @@ end
 
 get '/profile' do
  if session[:user_id] != nil
+  @questions = Answers.questions
   erb :profile
  else
   erb :login
