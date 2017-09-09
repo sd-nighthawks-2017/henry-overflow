@@ -36,18 +36,23 @@ get '/questions/:id' do
 end
 
 get '/questions/:id/upvote' do
-  @question_votes = Question.find(params[:id]).votes
+  if session[:user_id]
+    @question_votes = Question.find(params[:id]).votes
   if @question_votes[0] == nil
-   @question_votes << Vote.create(value: 1)
+    @question_votes << Vote.create(value: 1)
     redirect "/questions/#{params[:id]}"
   else
     int1 = @question_votes[0].value +=1
     @question_votes[0].update(value: int1)
      redirect "/questions/#{params[:id]}"
   end
+  else
+     redirect '/login'
+ end
 end
 
 get '/questions/:id/downvote' do
+  if session[:user_id]
   @question_votes = Question.find(params[:id]).votes
   if @question_votes[0] == nil
    @question_votes << Vote.create(value: 1)
@@ -57,11 +62,8 @@ get '/questions/:id/downvote' do
     @question_votes[0].update(value: int1)
      redirect "/questions/#{params[:id]}"
   end
+ end
 end
-
-
-
-
 
 # edit
 get '/questions/:id/edit' do
@@ -72,8 +74,6 @@ get '/questions/:id/edit' do
     redirect '/login'
   end
 end
-
-
 
 # update
 def update_question
@@ -102,8 +102,45 @@ end
 
 # create comment
 post '/questions/:id/comments' do
+  if session[:user_id]
   @comment = Comment.create(body: params[:body], user_id: session[:user_id])
   @question = Question.find(params[:id])
   @question.comments << @comment
   redirect "/questions/#{@question.id}"
+ else
+   redirect '/login'
+ end
 end
+
+
+get '/comments/:id/upvote' do
+  if session[:user_id]
+    @comment_votes = Comment.find(params[:id]).votes
+  if @comment_votes[0] == nil
+    @comment_votes << Vote.create(value: 1)
+    redirect "/"
+  else
+    int1 = @comment_votes[0].value +=1
+    @comment_votes[0].update(value: int1)
+     redirect "/"
+  end
+  else
+    redirect '/login'
+ end
+end
+
+get '/comments/:id/downvote' do
+  if session[:user_id]
+  @comment_votes = Comment.find(params[:id]).votes
+  if @comment_votes[0] == nil
+   @comment_votes << Vote.create(value: 1)
+    redirect "/questions/#{params[:id]}"
+  else
+    int1 = @comment_votes[0].value -=1
+    @comment_votes[0].update(value: int1)
+     redirect "/questions/#{params[:id]}"
+  end
+ end
+end
+
+

@@ -4,6 +4,7 @@ get '/answer' do
 end
 
 get '/answer/:id/upvote' do
+  if session[:user_id]
   @answer_votes = Answer.find(params[:id]).votes
   if @answer_votes[0] == nil
    @answer_votes << Vote.create(value: 1)
@@ -14,8 +15,10 @@ get '/answer/:id/upvote' do
      redirect '/'
   end
 end
+end
 
 get '/answer/:id/downvote' do
+  if session[:user_id]
   @answer_votes = Answer.find(params[:id]).votes
   if @answer_votes[0] == nil
    @answer_votes << Vote.create(value: 1)
@@ -25,6 +28,7 @@ get '/answer/:id/downvote' do
     @answer_votes[0].update(value: int1)
      redirect '/'
   end
+end
 end
 
 get '/answer/:id/edit' do
@@ -70,8 +74,10 @@ end
 
 # create comment
 post '/answers/:id/comments' do
+  if session[:user_id]
   @comment = Comment.create!(body: params[:body], user_id: session[:user_id])
   @answer = Answer.find(params[:id])
   @answer.comments << @comment
   redirect "/questions/#{params[:question_id]}"
+end
 end
