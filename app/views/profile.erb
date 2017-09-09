@@ -1,14 +1,6 @@
 <h> welcome to your henry_overflow profile page! </h>
 
-<h1> Questions you have asked?: </h1>
 
-<div class="home">
-  <ul>
-    <% @questions.each do |question| %>
-    <li> <a class="home-questions" href = "/questions/<%=question.id%>"> <%= question.title %> </a></li>
-    <% end %>
-  </ul>
-</div>
 
 
 <form action="/questions" method="post">
