@@ -6,19 +6,29 @@ end
 
 # new
 get '/questions/new' do
-  @question = Question.new
-  erb :"questions/new"
+  if session[:user_id]
+    @question = Question.new
+    erb :"questions/new"
+  else
+   redirect '/'
+ end
 end
 
 # create
 post '/questions' do
-  @question = Question.create(params[:question])
+ if session[:user_id]
+  @question = Question.create(title: params[:title], body: params[:question])
   redirect '/'
+ else
+  redirect '/login'
+end
 end
 
 # show
 get '/questions/:id' do
+
   @question = Question.find(params[:id])
+
   if request.xhr?
     erb :"/questions/_questions", layout: false
   else
@@ -26,17 +36,55 @@ get '/questions/:id' do
   end
 end
 
+get '/questions/:id/upvote' do
+  @question_votes = Question.find(params[:id]).votes
+  if @question_votes[0] == nil
+   @question_votes << Vote.create(value: 1)
+    redirect "/questions/#{params[:id]}"
+  else
+    int1 = @question_votes[0].value +=1
+    @question_votes[0].update(value: int1)
+     redirect "/questions/#{params[:id]}"
+  end
+end
+
+get '/questions/:id/downvote' do
+  @question_votes = Question.find(params[:id]).votes
+  if @question_votes[0] == nil
+   @question_votes << Vote.create(value: 1)
+    redirect "/questions/#{params[:id]}"
+  else
+    int1 = @question_votes[0].value -=1
+    @question_votes[0].update(value: int1)
+     redirect "/questions/#{params[:id]}"
+  end
+end
+
+
+
+
+
 # edit
 get '/questions/:id/edit' do
-  @question = Question.find(params[:id])
-  erb :"questions/edit"
+  if session[:user_id]
+    @question = Question.find(params[:id])
+    erb :"questions/edit"
+  else
+    redirect '/login'
+  end
 end
+
+
 
 # update
 def update_question
-  @question = Question.find(params[:id])
-  @question.update(params[:question])
-  redirect "/questions/#{@question.id}"
+  if session[:user_id]
+    @question = Question.find(params[:id])
+    @question.update(params[:question])
+    redirect "/questions/#{@question.id}"
+  else
+   redirect '/login'
+ end
 end
 
 patch '/questions/:id' do
@@ -45,6 +93,18 @@ end
 
 # delete
 delete '/questions/:id' do
-  Question.find(params[:id]).destroy!
-  redirect '/questions'
+  if session[:user_id]
+    Question.find(params[:id]).destroy!
+    redirect '/questions'
+  else
+    redirect '/login'
+ end
+end
+
+# create comment
+post '/questions/:id/comments' do
+  @comment = Comment.create(body: params[:body], user_id: session[:user_id])
+  @question = Question.find(params[:id])
+  @question.comments << @comment
+  redirect "/questions/#{@question.id}"
 end

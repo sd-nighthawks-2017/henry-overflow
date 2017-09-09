@@ -1,15 +1,16 @@
 <h1>Henry Overflow</h1>
 <h2> Oh Henry... I have a question:</h2>
 
-<a href = '/login'>login</a>  <a href = '/register'>register</a>
+<a href = '/login'>login</a> <a href = '/register'>register</a>
 
 <div class="home">
   <ul>
     <% @questions.each do |question| %>
-    <li> <a class="home-questions" href = "/questions"> <%= question %> </a></li>
+      <li>
+        <a class="home-questions" href = "/questions/<%=question.id%>"> <%= question.title %> </a>
+      </li>
     <% end %>
   </ul>
 </div>
 
 <p> Save 15% or more on car insurance by switching to Geico </p>
-
