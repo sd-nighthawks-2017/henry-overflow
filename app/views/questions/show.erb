@@ -1,8 +1,25 @@
+<<<<<<< HEAD
 <h3><%= @question.votes[0]%> <%= @question.title %></h3>
+=======
+
+<% @question.votes.each do |vote| %>
+<h3><%= vote.value %> <%= @question.title %></h3>
+<% end %>
+
+<h3><%= @question.title %></h3>
+>>>>>>> 9f7a7f1bf5c821cee689f80bf1a9ec584d0ce24a
 
 <p><%= @question.body %></p>
+
 <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
 <%= erb :'questions/_delete', layout: false, locals: { question: @question } %>
+
+<ul>
+  <% @question.comments.each do |comment| %>
+    <li><%= comment.body %></li>
+  <% end %>
+</ul>
+
 <a href="/questions/<%= @question.id %>/upvote">up vote</a>
 <a href="/questions/<%= @question.id %>/downvote">down vote</a>
 
@@ -15,16 +32,31 @@
 </ul>
 
 <p>Add a comment</p>
+
 <form action='/questions/<%= @question.id %>/comments' method='post'>
-  <label for='body'>Comment here: </label>
-  <input type="text" name="body">
-  <br>
-  <input type="submit" value="Comment">
+<label for='body'> Add comment for question here--> </label>
+ <input type="text" name="body">
+ <input type="submit" value="Comment">
 </form>
 
-<%#= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
+<%= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
 
-<a href='/'>Return Home</a>
+<ul>
+  <% @question.answers.each do |answer| %>
+    <li><%= answer.body %><br>
+      <a href="/answer/<%=answer.id%>/edit">edit</a>
+      <a href="/answer/<%=answer.id%>/delete"> delete</a>
+    </li>
+    <% answer.comments.each do |comment| %>
+      <li><%= comment.body %></li>
+    <% end %>
+    <form action='/answers/<%= answer.id %>/comments'   method='post'>
+      <input type="hidden" value="<%= @question.id %>" name="question_id" />
+      <label for='body'>Add comment for answer here --></label>
+      <input type="text" name="body">
+      <input type="submit" value="Comment">
+    </form>
+     <% end %>
 <ul>
   <% @question.answers.each do |answer| %>
     <li>
@@ -34,11 +66,12 @@
       <a href ="/answer/<%=answer.id%>/upvote">up vote</a>
       <a href = "/answer/<%=answer.id%>/downvote">down vote</a>
     </li>
+
   <% end %>
 </ul>
 
 <form action="/questions/<%=@question.id%>/answer" method="post">
-  <label for="answer">Answer</label>
+  <label for="answer">New Answer --></label>
   <input type="text" name="answer">
   <input type="submit" value="submit">
 </form>

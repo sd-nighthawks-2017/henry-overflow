@@ -26,9 +26,8 @@ end
 
 # show
 get '/questions/:id' do
-
   @question = Question.find(params[:id])
-
+  @answer = @question.answers
   if request.xhr?
     erb :"/questions/_questions", layout: false
   else
