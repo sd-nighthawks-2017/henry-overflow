@@ -4,4 +4,6 @@ class Answer < ActiveRecord::Base
   has_many :answer_comments
   has_many :comments, through: :answer_comments
 
+  has_many :votes, as: :votable
+
 end

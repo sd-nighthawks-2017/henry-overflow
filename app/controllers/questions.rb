@@ -33,8 +33,35 @@ get '/questions/:id' do
   else
     erb :"questions/show"
   end
-
 end
+
+get '/questions/:id/upvote' do
+  @question_votes = Question.find(params[:id]).votes
+  if @question_votes[0] == nil
+   @question_votes << Vote.create(value: 1)
+    redirect "/questions/#{params[:id]}"
+  else
+    int1 = @question_votes[0].value +=1
+    @question_votes[0].update(value: int1)
+     redirect "/questions/#{params[:id]}"
+  end
+end
+
+get '/questions/:id/downvote' do
+  @question_votes = Question.find(params[:id]).votes
+  if @question_votes[0] == nil
+   @question_votes << Vote.create(value: 1)
+    redirect "/questions/#{params[:id]}"
+  else
+    int1 = @question_votes[0].value -=1
+    @question_votes[0].update(value: int1)
+     redirect "/questions/#{params[:id]}"
+  end
+end
+
+
+
+
 
 # edit
 get '/questions/:id/edit' do
