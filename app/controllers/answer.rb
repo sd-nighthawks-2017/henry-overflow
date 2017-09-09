@@ -3,8 +3,28 @@ get '/answer' do
   erb :answer
 end
 
-get '/answer/:id' do
+get '/answer/:id/upvote' do
+  @answer_votes = Answer.find(params[:id]).votes
+  if @answer_votes[0] == nil
+   @answer_votes << Vote.create(value: 1)
+    redirect '/login'
+  else
+    int1 = @answer_votes[0].value +=1
+    @answer_votes[0].update(value: int1)
+     redirect '/'
+  end
+end
 
+get '/answer/:id/downvote' do
+  @answer_votes = Answer.find(params[:id]).votes
+  if @answer_votes[0] == nil
+   @answer_votes << Vote.create(value: 1)
+    redirect '/login'
+  else
+    int1 = @answer_votes[0].value -=1
+    @answer_votes[0].update(value: int1)
+     redirect '/'
+  end
 end
 
 get '/answer/:id/edit' do

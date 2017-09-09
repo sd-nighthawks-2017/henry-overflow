@@ -1,5 +1,6 @@
 class Answer < ActiveRecord::Base
   belongs_to :user
   belongs_to :question
-  belongs_to :votable, polymorphic: true
+
+  has_many :votes, as: :votable
 end
