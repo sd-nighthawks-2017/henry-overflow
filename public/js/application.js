@@ -1,24 +1,21 @@
-This function will display the question details without refreshing page
-
 $(document).ready(function() {bindClickEvents() })
 
-// Intercept the form submission event using JQuery
 function bindClickEvents() {
-  console.log("inside the bindClickEvents")
-  $('.home-questions').fadeIn().on('click', showClickHandler)
+//Intercept the form submission event using JQuery
+$('.make-question-button').on('click', handleFormSubmit)
 }
 
 // Prevent the default action for that event from happening
 // Use jQuery to submit an AJAX post to the form's action
-function showClickHandler(event) {
-  console.log("inside the handleFormSubmit")
+function handleFormSubmit(event) {
+  console.log("This is the handleFormSubmit")
   event.preventDefault()
   var ajax_options = {
     url: $(this).attr('href'),
-    headers: { Accept: "application/json" }
+    headers: { Accept: 'application/json' }
   }
 
-// When the AJAX post is done, display the question details using JQuery
+// When the AJAX post is done, display the updated number of votes using JQuery
   var $ajax = $.ajax(ajax_options)
   $ajax.done(ajaxDoneHandler.bind(this))
 };
@@ -26,9 +23,15 @@ function showClickHandler(event) {
 // Function that handles when ajax is done, gets called in $ajax.done
 
 function ajaxDoneHandler(response) {
-  // var responseObject = JSON.parse(response)
-  console.log("inside the ajaxDoneHandler")
+  console.log("This is the ajaxDoneHandler")
+  var responseObject = JSON.parse(response)
   console.log(response)
-  console.log(this)
-  $(this).closest('li').append(response)
+  $(this).closest('tr').find('#vote-num').html(responseObject.votes[0].value)
 }
+
+$(document).ready(function(){
+  $('ol li a').click(function(){
+    $('li a').removeClass("active");
+      $(this).addClass("active")
+  });
+});
