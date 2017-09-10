@@ -54,7 +54,9 @@
     <% @question.answers.each do |answer| %><br>
       <li>
         <%= answer.votes[0] %> <%= answer.body %>
-        <a id="fav" href="#" >👍 Favorite Answer</a><br>
+
+        <%= erb :'/questions/_favanswer', layout: false %><br>
+
         <table id="answer-options-table">
           <tr>
             <td><a class="make-answer-button" href ='/answer/<%=answer.id%>/edit'>Edie Answer</a></td>
