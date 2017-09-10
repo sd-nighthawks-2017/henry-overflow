@@ -1,9 +1,12 @@
+a {
+text-decoration: none;
+color: black;
+}
 .active {
-  background-color: green;
-  text-decoration: none;
+  background-color: #6495ED;
   color: white;
-  padding: 2px;
-  border: dotted white;
+  padding: 3px;
+  border-radius: 10px;
 }
 
 #question-title, th {
@@ -66,3 +69,4 @@ ol {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
 }
+

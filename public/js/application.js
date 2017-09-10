@@ -30,7 +30,7 @@ function ajaxDoneHandler(response) {
 }
 
 $(document).ready(function(){
-  $('ol li a').click(function(event){
+  $('ol li a').on('click', function(event){
     $('li a').removeClass("active");
       $(this).addClass("active")
       event.preventDefault()
