@@ -68,3 +68,10 @@ get '/answer/:id/delete' do
   end
 end
 
+# create comment
+post '/answers/:id/comments' do
+  @comment = Comment.create!(body: params[:body], user_id: session[:user_id])
+  @answer = Answer.find(params[:id])
+  @answer.comments << @comment
+  redirect "/questions/#{params[:question_id]}"
+end

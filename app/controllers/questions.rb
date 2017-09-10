@@ -26,25 +26,36 @@ end
 
 # show
 get '/questions/:id' do
-
   @question = Question.find(params[:id])
+  @answer = @question.answers
 
-  if request.xhr?
-    erb :"/questions/_questions", layout: false
-  else
-    erb :"questions/show"
-  end
+  erb :"questions/show"
 end
 
 get '/questions/:id/upvote' do
   @question_votes = Question.find(params[:id]).votes
   if @question_votes[0] == nil
    @question_votes << Vote.create(value: 1)
-    redirect "/questions/#{params[:id]}"
-  else
-    int1 = @question_votes[0].value +=1
+    if request.xhr?
+      if request.accept? 'application/json'
+        { votes: @question_vote }.to_json
+      else
+        erb :'/questions/_voteup', layout: false
+      end
+    else
+      redirect "/questions/#{params[:id]}"
+    end
+  elsif int1 = @question_votes[0].value +=1
     @question_votes[0].update(value: int1)
-     redirect "/questions/#{params[:id]}"
+     if request.xhr?
+      if request.accept? 'application/json'
+        { votes: @question_votes }.to_json
+      else
+        erb :'/questions/_voteup', layout: false
+      end
+     else
+      redirect "/questions/#{params[:id]}"
+    end
   end
 end
 
@@ -52,11 +63,26 @@ get '/questions/:id/downvote' do
   @question_votes = Question.find(params[:id]).votes
   if @question_votes[0] == nil
    @question_votes << Vote.create(value: 1)
-    redirect "/questions/#{params[:id]}"
-  else
-    int1 = @question_votes[0].value -=1
+    if request.xhr?
+      if request.accept? 'application/json'
+        { votes: @question_vote }.to_json
+      else
+        erb :'/questions/_voteup', layout: false
+      end
+    else
+      redirect "/questions/#{params[:id]}"
+    end
+  elsif int1 = @question_votes[0].value -=1
     @question_votes[0].update(value: int1)
-     redirect "/questions/#{params[:id]}"
+     if request.xhr?
+      if request.accept? 'application/json'
+        { votes: @question_votes }.to_json
+      else
+        erb :'/questions/_voteup', layout: false
+      end
+     else
+      redirect "/questions/#{params[:id]}"
+    end
   end
 end
 

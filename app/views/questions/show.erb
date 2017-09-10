@@ -1,44 +1,84 @@
-<h3><%= @question.votes[0].value%> <%= @question.title %></h3>
+<div id="question-title-vote">
+  <table id="question-title">
+    <th><h1><%= @question.title %></h1></th>
 
-<p><%= @question.body %></p>
-<a href="/questions/<%= @question.id %>/edit">Edit Question</a>
-<%= erb :'questions/_delete', layout: false, locals: { question: @question } %>
-<a href="/questions/<%= @question.id %>/upvote">up vote</a>
-<a href="/questions/<%= @question.id %>/downvote">down vote</a>
+    <th>
+      <% @question.votes.each do |vote| %>
+        <h1>has <span id='vote-num'><%= vote.value %></span> votes!</h1>
+      <% end %>
+    </th>
 
-<ul>
-  <% @question.comments.each do |comment| %>
-    <li><%=%> <%= comment.body %></li>
-    <a href ='/question/<%=comment.id%>/upvote'>upvote </a>
-    <a href ='/question/<%=comment.id%>/downvote'>downvote </a>
-  <% end %>
-</ul>
+    <th>
+      <%= erb :'/questions/_voteup', layout: false, locals: { question: @question } %>
+    </th>
 
-<p>Add a comment</p>
-<form action='/questions/<%= @question.id %>/comments' method='post'>
-  <label for='body'>Comment here: </label>
-  <input type="text" name="body">
-  <br>
-  <input type="submit" value="Comment">
-</form>
+    <th>
+      <%= erb :'/questions/_votedown', layout: false, locals: { question: @question } %>
+    </th>
+  </table>
+</div>
+
+<div id="question-edit-delete">
+  <h3>Question: <%= @question.body %></h3>
+
+  <table id="question-options">
+    <td><a class="make-button" href="/questions/<%= @question.id %>/edit">Edit Question</a></td>
+
+    <td><%= erb :'questions/_delete', layout: false, locals: { question: @question } %></td>
+  </table>
+</div>
+
+<div id="question-comment-options">
+  <h3 class="question-comments">Question Comments:</h3>
+      <ol>
+          <% @question.comments.each do |comment| %><br>
+        <li>
+            <a class="make-button" href ='/question/<%=comment.id%>/upvote'>⬆️ Vote</a>
+            <a class="make-button" href ='/question/<%=comment.id%>/downvote'>⬇️ Vote</a>
+            <%= comment.body %>
+            <% end %>
+        </li>
+      </ol>
+  <form id="leave-comment-form" action='/questions/<%= @question.id %>/comments' method='post'>
+    <label for='body'>Add Comment:</label>
+    <input type="text" name="body">
+    <input type="submit" value="Comment">
+  </form>
+</div>
 
 <%#= erb :'/questions/_questions', layout: false, locals: { question: @question } %>
 
-<a href='/'>Return Home</a>
-<ul>
-  <% @question.answers.each do |answer| %>
-    <li>
-      <%= answer.votes[0].value %> <%= answer.body %>
-      <a href ='/answer/<%=answer.id%>/edit'>edit </a>
-      <a href = "/answer/<%=answer.id%>/delete"> delete </a>
-      <a href ="/answer/<%=answer.id%>/upvote">up vote</a>
-      <a href = "/answer/<%=answer.id%>/downvote">down vote</a>
-    </li>
-  <% end %>
-</ul>
+<div id="answer-options">
+  <h3 class="answer-comments">Henry's Helpers Answers:</h3>
+    <ol>
+    <% @question.answers.each do |answer| %><br>
+      <li>
+        <%= answer.votes[0] %> <%= answer.body %>
 
-<form action="/questions/<%=@question.id%>/answer" method="post">
-  <label for="answer">Answer</label>
-  <input type="text" name="answer">
-  <input type="submit" value="submit">
-</form>
+        <%= erb :'/questions/_favanswer', layout: false %><br>
+
+        <table id="answer-options-table">
+          <tr>
+            <td><a class="make-answer-button" href ='/answer/<%=answer.id%>/edit'>Edie Answer</a></td>
+            <td><a class="make-answer-button" href = "/answer/<%=answer.id%>/delete">Delete Answer</a></td>
+            <td><a class="make-answer-button" href ="/answer/<%=answer.id%>/upvote">⬆️ Vote</a></td>
+            <td><a class="make-answer-button" href = "/answer/<%=answer.id%>/downvote">⬇️ Vote</a></td>
+          </tr>
+        </table>
+      </li>
+      <form action='/answers/<%= answer.id %>/comments'   method='post'>
+        <input type="hidden" value="<%= @question.id %>" name="question_id" />
+        <label for='body'>Like This Answer, Tell Us Why:</label>
+        <input type="text" name="body">
+        <input type="submit" value="Comment">
+      </form>
+    <% end %>
+  </ol>
+</div>
+
+
+  <form action="/questions/<%=@question.id%>/answer" method="post">
+    <label for="answer"><b>Help Henry, Leave an Answer:</b></label>
+    <input type="text" name="answer">
+    <input type="submit" value="submit">
+  </form>
