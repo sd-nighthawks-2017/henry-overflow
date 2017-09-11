@@ -17,7 +17,8 @@
     </th>
   </table>
 
-  <h3>Question: <%= @question.body %></h3>
+
+ <h3>Question: <%= @question.body %></h3>
 
   <table id="question-options">
     <td><a class="make-button" href="/questions/<%= @question.id %>/edit">Edit Question</a></td>
@@ -53,6 +54,7 @@
 
         <%= erb :'/questions/_favanswer', layout: false %><br>
 
+
         <table id="answer-options-table">
           <tr>
             <td><a class="make-answer-button" href ='/answer/<%=answer.id%>/edit'>Edie Answer</a></td>
@@ -79,3 +81,4 @@
     <input type="submit" value="submit">
   </form>
 </div>
+

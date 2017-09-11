@@ -1,3 +1,4 @@
+
 $(document).ready(function() {bindClickEvents() })
 
 function bindClickEvents() {
@@ -20,7 +21,6 @@ function handleFormSubmit(event) {
   $ajax.done(ajaxDoneHandler.bind(this))
 };
 
-// Function that handles when ajax is done, gets called in $ajax.done
 
 function ajaxDoneHandler(response) {
   console.log("This is the ajaxDoneHandler")
@@ -36,3 +36,4 @@ $(document).ready(function(){
       event.preventDefault()
   });
 });
+
