@@ -1,16 +1,24 @@
+
+<div id="home">
+  <h1><center> Welcome to Henry Overflow </center></h1>
+  <h3><center>Pick a Question:</center></h3>
+
 <h1>Henry Overflow</h1>
 <h2> Oh Henry... I have a question:</h2>
 
-<a href = '/login'>login</a> <a href = '/register'>register</a>
 
-<div class="home">
-  <ul>
-    <% @questions.each do |question| %>
-      <li>
-        <a class="home-questions" href = "/questions/<%=question.id%>"> <%= question.title %> </a>
-      </li>
-    <% end %>
-  </ul>
+  <a class="log" href = '/login'><b>Login |</b></a>
+  <a class="reg" href = '/register'><b>Register</b></a>
+
+  <div class="home">
+    <ul>
+      <% @questions.each do |question| %>
+        <li class="home-list">
+          <a class="home-questions" href = "/questions/<%=question.id%>"> <%= question.body %> </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <p><center> <b>Only $15/month to subscribe to Henry Ultra!</b></center></p>
 </div>
-
-<p> Save 15% or more on car insurance by switching to Geico </p>
