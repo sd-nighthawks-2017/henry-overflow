@@ -16,9 +16,7 @@
       <%= erb :'/questions/_votedown', layout: false, locals: { question: @question } %>
     </th>
   </table>
-</div>
 
-<div id="question-edit-delete">
   <h3>Question: <%= @question.body %></h3>
 
   <table id="question-options">
@@ -26,9 +24,7 @@
 
     <td><%= erb :'questions/_delete', layout: false, locals: { question: @question } %></td>
   </table>
-</div>
 
-<div id="question-comment-options">
   <h3 class="question-comments">Question Comments:</h3>
       <ol>
           <% @question.comments.each do |comment| %><br>
@@ -76,9 +72,10 @@
   </ol>
 </div>
 
-
+<div id="answer-form">
   <form action="/questions/<%=@question.id%>/answer" method="post">
     <label for="answer"><b>Help Henry, Leave an Answer:</b></label>
     <input type="text" name="answer">
     <input type="submit" value="submit">
   </form>
+</div>
